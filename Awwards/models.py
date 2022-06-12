@@ -1,9 +1,11 @@
 import profile
+from unicodedata import name
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from tinymce.models import HTMLField
+
 
 # Create your models here.
 class Profile(models.Model):
@@ -28,9 +30,12 @@ class Profile(models.Model):
 class Post(models.Model):
     title =  models.CharField(max_length=30)
     image = models.ImageField(upload_to='post/')
-    description = HTMLField()
+    description = models.TextField()
     link = models.CharField(max_length=500)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+            return self.title         
 
 
     def save_post(self):
@@ -38,3 +43,5 @@ class Post(models.Model):
         
     def delete_post(self):
         self.delete()
+
+  
