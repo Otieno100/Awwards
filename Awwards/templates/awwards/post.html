@@ -1,12 +1,78 @@
 {%extends 'awwards/base.html'%}
-
+{% load bootstrap4 %}
 {% block content %}
 {{block.super}}
 
+<div style="margin-top:3cm">
+    {% for item in post %}
+    <div class="modal-dialog " role="document"></div>
+    <!-- Button trigger modal -->
+    <button type="button" class="default" class="modal-dialog " role="document" data-toggle="modal"
+        data-target="#post-modal{{item.id}}">
+        <img   class="card-img-top img-fluid image" class="img-responsive"
+        src="{{item.image.url}}">
+    </button>
 
 
-<h3>Black woman can perform magic</h3>
+    <!-- Modal -->
+    <div class="modal fade" id="post-modal{{item.id}}" tabindex="" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
 
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                                
+                </div>
+
+                <div class="modal-body">
+                   
+                    <div class="container">
+                        <a class="lightbox" href="{{post_item.name}}" class="row">
+                            <div class="col-md-4">
+
+                                <div style="display: flex;">
+                                    <img   class="card-img-top img-fluid image" class="img-responsive"
+                                        src="{{item.image.url}}">
+                                </div>
+
+                                {{item.title}}
+
+                                <span class="description-heading">{{item.name}}</span>
+
+                                {{item.description}}
+                                <a href="{{item.link}}">view project</a>
+
+
+                            </div>
+                        </a>
+                    </div>
+                   
+
+                </div>
+
+
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+
+
+        </div>
+    </div>
+    {%endfor%}
+</div>
+
+
+
+
+</div>
 
 
 
