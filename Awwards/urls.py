@@ -12,7 +12,7 @@ urlpatterns=[
     re_path(r'^new/updateUser$', views.updatePost, name='updateUser'),
     # re_path(r'^profile/(?P<username>\w+)/settings', add_profile, name='Profile'),
     re_path(r'^api/merch/$', views.MerchList.as_view()),
-    re_path(r"^/profile/(\d+)", views.add_profile, name="profile"),
+    re_path(r"^profile/(\d+)", views.add_profile, name="profile"),
     # re_path(r'^project/(?P<id>\d+)',views.project,name='project'),
     
 ]
