@@ -1,16 +1,37 @@
-<div class="fixed-top">
-    <div class="collapse" id="navbarToggleExternalContent">
-      <div class="bg-dark p-4">
-        <!-- <h5 class="text-white h4">Collapsed content</h5> -->
-        <!-- <span class="text-muted">Toggleable via the navbar brand.</span> -->
-        
-      </div>
-    </div>
-    <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'postToday' %}">Awwards</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
-   
+
+
+
+<nav class="navbar navbar-light bg-light justify-content-between">
+ <a class="navbar-brand" href="{% url 'postToday' %}">Awwards</a>
+  <form class="form-inline" class="navbar-form" role="search" action="{% url 'search_results' %}">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search Posts" aria-label="Search" name="post">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+  <div class="col-sm-6 col-md-6">
+    {% if user.is_authenticated %}
+    <ul>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
+                  <span class="caret"></span>
+              </a>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <a href="{%url 'postToday'%}">Home</a>
+          </li>
+          <li>
+            <a href="/accounts/password/change">Change Password</a>
+          </li>
+          <li>
+            <a href="/logout">Logout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    {% else %}
+    <li>
+      <a class='btn btn-default' href="/accounts/login">Login</a>
+    </li>
+
+    {% endif %}
   </div>
+</nav>

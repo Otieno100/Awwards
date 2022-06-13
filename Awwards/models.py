@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from tinymce.models import HTMLField
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -25,7 +26,10 @@ class Profile(models.Model):
     def delete_profile(self):
         self.delete()
 
-
+class AwwardsMerch(models.Model):
+    name = models.CharField(max_length=40)
+    description = models.TextField()
+    price = models.DecimalField(decimal_places=2, max_digits=20)
 
 class Post(models.Model):
     title =  models.CharField(max_length=30)
@@ -33,6 +37,7 @@ class Post(models.Model):
     description = models.TextField()
     link = models.CharField(max_length=500)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+
 
     def __str__(self):
             return self.title         
@@ -45,3 +50,7 @@ class Post(models.Model):
         self.delete()
 
   
+    @classmethod
+    def search_by_title(cls,search_term):
+        posts = cls.objects.filter(title__icontains=search_term)
+        return posts
