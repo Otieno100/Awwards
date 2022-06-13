@@ -2,7 +2,7 @@ from django import forms
 from .models import Post
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Post, Profile
+from .models import Post, Profile,Rating
 # from pillow.forms import ImageField
 
 
@@ -35,3 +35,7 @@ class UpdateUserProfileForm(forms.ModelForm):
         model = Profile
         fields = ['name', 'bio', 'contact']
 
+class RatingsForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['design', 'usability', 'content']
