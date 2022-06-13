@@ -55,7 +55,10 @@ class Post(models.Model):
         posts = cls.objects.filter(title__icontains=search_term)
         return posts
 
-
+    @classmethod
+    def get_by_user(cls, user):
+            post = cls.objects.filter(user=user)
+            return post
 
 
 
