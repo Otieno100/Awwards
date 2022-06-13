@@ -1,28 +1,92 @@
 {%extends 'awwards/base.html'%}
+{% load bootstrap4 %}
+{% block content %}
+{% load static%}
 
- {% block content %}
+{{block.super}}
 
- <div class="container">
+{% block styles %}
+{% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/awwards.css' %}">
+{% endblock %}
 
-   <div class="row">
-     <img src="{{post.image.url}}"  class="img-responsive" alt="">
-   </div>
 
-   <div class="row">
-     <h1 class="text-center">{{post.title}}</h1>
-   </div>
+<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+<div class="container top mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-5">
+          {% if profile.profile_item %}
+          <img src="{{profile.profile_image.url}}" alt="profile-photo" class="img-fluid-circle" style="border-radius: 50%;height:200px;width: 200px;">
+          {% endif %}
+        </div>
+        <div class="col-md-5 text-left">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <span class="username"><b>Username:</b> {{ profile.user }}</span>
+            </li><br>
+            {% if profile.user == user %}
+            <li class="list-inline-item mt-3" >
+              <a data-toggle="modal" data-target="#edit" href=""><i class="far fa-edit"></i>Edit Profile</a>
+            </li>
+            {% else %}
+            <li class="list-inline-item">
+              <a href="#" class="btn btn-primary">Follow</a>
+            </li>
+            {% endif %}
+          </ul>
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <span class="font-weight-bold">{{images|length}}</span> Posts
+            </li>
+            <li class="list-inline-item">
+              <span class="font-weight-bold">{{profile.user.follow.all | length}}</span> Followers
+            </li>
+            <li class="list-inline-item">
+              <span class="font-weight-bold">{{profile.user.c_user.all | length}}</span> Following
+            </li>
+          </ul>
+          <p class="font3">{{profile.bio}}</p>
+          {% if profile.user == user %}
+          <p><a href="{% url 'upload' %}"> Create Post</a></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container">
+    <div class="row">
+      {% for post in post %}
+      <div class="col-md-4">
+        <img src="{{post.image.url}}" alt="Image" style="height:300px;width:300px;">
+      </div>
+      {% empty %}
+      <div class="col-md-12">
+        <h2>Profile has no images</h2>
+      </div>
+      {% endfor %}
+    </div>
 
-   <div class="row">
-     {% autoescape on %}
-     {{article.post| safe}}
-    {% endautoescape %}
+  </div>
 
-   </div>
+</div>
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <ul class="list-group">
+          <li class="list-group-item text-center"><a href="{% url 'profile_edit' %}">Edit Profile</a></li>
+          <li class="list-group-item text-center"><a href="/logout/">Log Out</a></li>
+          <li class="list-group-item text-center"><a data-dismiss="modal">Cancel</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-   <div class="row">
-     <p>Posted  by {{post.user.name}}</p>
-   </div>
 
- </div>
 
- {% endblock %}
+{%endblock%}
+
