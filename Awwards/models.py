@@ -54,3 +54,36 @@ class Post(models.Model):
     def search_by_title(cls,search_term):
         posts = cls.objects.filter(title__icontains=search_term)
         return posts
+
+
+
+
+
+class Rating(models.Model):
+    rating = (
+            (1, '1'),
+            (2, '2'),
+            (3, '3'),
+            (4, '4'),
+            (5, '5'),
+            (6, '6'),
+            (7, '7'),
+            (8, '8'),
+            (9, '9'),
+            (10, '10'),
+    )
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='ratings',null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name='rater')
+    content = models.IntegerField(choices=rating,blank=True)
+    design = models.IntegerField(choices=rating,blank=True)
+    usability = models.IntegerField(choices=rating,blank=True)
+    score = models.FloatField(default=0,blank=True)
+    content_coverage = models.FloatField(default=0,blank=True)
+    design_coverage = models.FloatField(default=0,blank=True)
+    usability_coverage = models.FloatField(default=0,blank=True)
+
+    def save_ratings(self):
+            return  self.save()
+
+    def __str__(self):
+            return f"{self.post} Rating"
